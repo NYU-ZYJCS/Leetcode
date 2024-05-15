@@ -6,15 +6,15 @@ public:
         int dx[] = {1, 0, -1, 0}, dy[] = {0, 1, 0, -1};
         
         queue<pii> q;
-        int d[n][n];
-        memset(d, -1, sizeof d);
+        int dis[n][n];
+        memset(dis, -1, sizeof dis);
         
         // put source point into the queue
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (grid[i][j]) {
                     q.push({i, j});
-                    d[i][j] = 0;
+                    dis[i][j] = 0;
                 }
             }
         }
@@ -25,9 +25,9 @@ public:
             q.pop();
             for (int i = 0; i < 4; ++i) {
                 int nx = x + dx[i], ny = y + dy[i];
-                if (nx < 0 || nx >= n || ny < 0 || ny >= n || d[nx][ny] != -1) continue;
+                if (nx < 0 || nx >= n || ny < 0 || ny >= n || dis[nx][ny] != -1) continue;
                 q.emplace(nx, ny);
-                d[nx][ny] = d[x][y] + 1;
+                dis[nx][ny] = dis[x][y] + 1;
             }
         }
         
@@ -45,7 +45,7 @@ public:
                 q.pop();
                 for (int i = 0; i < 4; ++i) {
                     int nx = x + dx[i], ny = y + dy[i];
-                    if (nx < 0 || nx >= n || ny < 0 || ny >= n || f[nx][ny] || d[nx][ny] < k) continue;
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= n || f[nx][ny] || dis[nx][ny] < k) continue;
                     q.emplace(nx, ny);
                     f[nx][ny] = true;
                 }
@@ -54,13 +54,13 @@ public:
             return f[n - 1][n - 1];
         };
         
-       int l = 0, r = min(d[0][0], d[n - 1][n - 1]), mid;
-        while (l < r) {
-            mid = (l + r + 1) >> 1;
-            if (check(mid))l = mid;
+        int l = 0, r = min(dis[0][0], dis[n - 1][n - 1]);
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (check(mid)) l = mid + 1;
             else r = mid - 1;
-        }
-        return l;
-
+        } 
+        
+        return r;
     }
 };
