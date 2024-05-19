@@ -17,7 +17,7 @@ public:
     
     vector<TreeNode*> helper(int start, int end) {
         if (start > end) return {nullptr};
-        vector<TreeNode*> roots;
+        if (cache.find({start, end}) != cache.end()) return cache[{start, end}];
         
         for (int i = start; i <= end; ++i) {
             vector<TreeNode*> leftRoots = helper(start, i - 1);
@@ -25,14 +25,15 @@ public:
             
             for (auto& leftRoot : leftRoots) {
                 for (auto& rightRoot : rightRoots) {
-                    TreeNode* root = new TreeNode(i);
-                    root->left = leftRoot;
-                    root->right = rightRoot;
-                    roots.push_back(root);
+                    TreeNode* root = new TreeNode(i, leftRoot, rightRoot);
+                    cache[{start, end}].push_back(root);
                 }
             }
         }
         
-        return roots;
+        return cache[{start, end}];
     }
+
+private:
+    map<pair<int, int>, vector<TreeNode*>> cache;
 };
