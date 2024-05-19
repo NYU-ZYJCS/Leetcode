@@ -5,9 +5,7 @@ public:
         if(grid[0][0] == 1) return -1;
         vector<vector<int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
         
-        vector<vector<bool>> visited(n, vector<bool>(n, false));
         queue<vector<int>> q;
-        visited[0][0] = true;
         q.push({0, 0, 1});
         
         while (!q.empty()) {
@@ -19,8 +17,8 @@ public:
             for (auto dir : directions) {
                 int x = t[0] + dir[0];
                 int y = t[1] + dir[1];
-                if (x >= 0 && y >= 0 && x < n && y < n && grid[x][y] == 0 && !visited[x][y]) {
-                    visited[x][y] = true;
+                if (x >= 0 && y >= 0 && x < n && y < n && grid[x][y] == 0) {
+                    grid[x][y] = 1;
                     q.push({x, y, t[2] + 1});
                 }
             }
