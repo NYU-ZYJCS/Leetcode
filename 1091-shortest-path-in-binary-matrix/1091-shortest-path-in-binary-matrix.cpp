@@ -13,21 +13,21 @@ public:
         while (!q.empty()) {
             int size = q.size();
             
-            for (int i = 0; i < size; ++i) {
+            while (size--) {
                 auto [x, y] = q.front();
                 q.pop();
-
                 if (x == n - 1 && y == n - 1) return steps;
 
                 for (auto dir : directions) {
                     int nx = x + dir.first;
                     int ny = y + dir.second;
                     if (nx >= 0 && ny >= 0 && nx < n && ny < n && grid[nx][ny] == 0) {
-                        grid[nx][ny] = 1; // mark as visited
+                        grid[nx][ny] = 2;
                         q.push({nx, ny});
                     }
                 }
             }
+            
             steps++;
         }
         
