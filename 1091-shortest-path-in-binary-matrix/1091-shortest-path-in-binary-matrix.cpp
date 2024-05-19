@@ -3,25 +3,32 @@ public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
         int n = grid.size();
         if(grid[0][0] == 1) return -1;
-        vector<vector<int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+        vector<pair<int, int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
         
-        queue<vector<int>> q;
-        q.push({0, 0, 1});
+        queue<pair<int, int>> q;
+        q.push({0, 0});
+        grid[0][0] = 2;
+        int steps = 1;
         
         while (!q.empty()) {
-            auto t = q.front();
-            q.pop();
+            int size = q.size();
             
-            if (t[0] == n - 1 && t[1] == n - 1) return t[2];
-            
-            for (auto dir : directions) {
-                int x = t[0] + dir[0];
-                int y = t[1] + dir[1];
-                if (x >= 0 && y >= 0 && x < n && y < n && grid[x][y] == 0) {
-                    grid[x][y] = 1;
-                    q.push({x, y, t[2] + 1});
+            for (int i = 0; i < size; ++i) {
+                auto [x, y] = q.front();
+                q.pop();
+
+                if (x == n - 1 && y == n - 1) return steps;
+
+                for (auto dir : directions) {
+                    int nx = x + dir.first;
+                    int ny = y + dir.second;
+                    if (nx >= 0 && ny >= 0 && nx < n && ny < n && grid[nx][ny] == 0) {
+                        grid[nx][ny] = 1; // mark as visited
+                        q.push({nx, ny});
+                    }
                 }
             }
+            steps++;
         }
         
         return -1;
