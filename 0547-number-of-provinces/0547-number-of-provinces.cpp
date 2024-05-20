@@ -1,31 +1,30 @@
 class Solution {
 public:
+    int unionFind(int x) {
+        if (parent[x] != x) parent[x] = unionFind(parent[x]);
+        return parent[x];
+    }
+    
     int findCircleNum(vector<vector<int>>& isConnected) {
-        int n = isConnected.size();
-        unordered_set<int> seen;
-        int res = 0;
-        // 1 0 0 1
-        // 0 1 1 0
-        // 0 1 1 1
-        // 1 0 1 1
-        
-        function<void(int)> dfs = [&] (int city) {
-        for (int j = 0; j < n; ++j) {
-            if (isConnected[city][j] == 1 && seen.find(j) == seen.end()) {
-                    seen.insert(j);
-                    dfs(j);
-                }
-            }
-        };
+        int n = isConnected.size(), provinces = n;
+        parent.resize(n);
+        iota(parent.begin(), parent.end(), 0);
 
-        for (int city = 0; city < n; ++city) {
-            if (seen.find(city) == seen.end()) {
-                seen.insert(city);
-                dfs(city);
-                res++;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (isConnected[i][j]) { 
+                    int x = unionFind(i), y = unionFind(j);
+                    if (x != y) {
+                        parent[x] = y;
+                        --provinces;
+                    }
+                }
             }
         }
         
-        return res;
+        return provinces;
     }
+    
+private:
+    vector<int> parent;
 };
