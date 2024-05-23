@@ -1,24 +1,25 @@
 class Solution {
 public:
     int beautifulSubsets(vector<int>& nums, int k) {
+        int result = -1;
         int n = nums.size();
-        int result = 0;
-        unordered_map<int, int> freq;
+        int cnt[3001]{};
         
         function<void(int)> helper = [&] (int pos) {
             ++result;
             if (pos == n) return;
             
             for (int i = pos; i < n; ++i) {
-                if (freq[nums[i] + k] == 0 && freq[nums[i] - k] == 0) {
-                    freq[nums[i]]++;
+                int x = nums[i] + k;
+                if (cnt[x - k] == 0 && cnt[x + k] == 0) {
+                    ++cnt[x];
                     helper(i + 1);
-                    freq[nums[i]]--;
+                    --cnt[x];
                 }
             }
         };
         
         helper(0);
-        return result - 1;
+        return result;
     }
 };
