@@ -2,13 +2,18 @@ class Solution {
 public:
     int minSteps(int n) {
         if (n == 1) return 0;
+        int res = 0;
+        // i * j = n
         
-        for (int i = n / 2; i >= 2; --i) {
-            if (n % i == 0) {
-                return minSteps(i) + n / i;
+        for (int i = 2; i <= sqrt(n) && i < n; ++i) {
+            while (n % i == 0) {
+                n /= i;
+                res += i;
             }
         }
         
-        return n;
+        if (n > 1) res += n;
+        
+        return res;
     }
 };
