@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
-        map<int, int> freq;
+        int freq[1001];
         for (auto num : arr1) freq[num]++;
         
         int idx = 0;
@@ -14,10 +14,10 @@ public:
             }
         }
         
-        for (auto &[num, f] : freq) {
-            while (f > 0) {
-                arr1[idx++] = num;
-                freq[num]--;
+        for (int i = 0; i <= 1000; ++i) {
+            while (freq[i] > 0) {
+                arr1[idx++] = i;
+                freq[i]--;
             }
         }
         
