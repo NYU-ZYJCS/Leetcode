@@ -2,30 +2,19 @@ class Solution {
 public:
     int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
         int n = difficulty.size();
-        vector<pair<int, int>> tasks(n);
-        
-        for (int i = 0; i < n; ++i) {
-            tasks[i] = {difficulty[i], profit[i]};
+        vector<pair<int, int>> jobs(n);
+        for (int i = 0; i < n; i++) {
+            jobs[i] = {difficulty[i], profit[i]};
         }
-        ranges::sort(tasks);
+        ranges::sort(jobs);
         ranges::sort(worker);
-        
-        for (int i = 1; i < n; ++i) {
-            tasks[i].second = max(tasks[i - 1].second, tasks[i].second);
-        }
-        
-        int maxProfit = 0;
-        int tIndex = 0;
-        int maxPossibleProfit = 0;
-
-        for (int i = 0; i < worker.size(); ++i) {
-            while (tIndex < n && worker[i] >= tasks[tIndex].first) {
-                maxPossibleProfit = tasks[tIndex].second;
-                tIndex++;
+        int ans = 0, j = 0, max_profit = 0;
+        for (int w : worker) {
+            while (j < n && jobs[j].first <= w) {
+                max_profit = max(max_profit, jobs[j++].second);
             }
-            maxProfit += maxPossibleProfit;
+            ans += max_profit;
         }
-
-        return maxProfit;
+        return ans;
     }
 };
