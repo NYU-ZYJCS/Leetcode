@@ -15,6 +15,7 @@ public:
                     if (flower == k) {
                         flower = 0;
                         bouquets++;
+                        if (bouquets >= m) return true;
                     }
                 } else {
                     flower = 0;
