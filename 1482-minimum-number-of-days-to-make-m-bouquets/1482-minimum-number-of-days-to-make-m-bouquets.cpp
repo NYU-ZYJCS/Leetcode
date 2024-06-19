@@ -3,35 +3,36 @@ public:
     int minDays(vector<int>& bloomDay, int m, int k) {
         int n = bloomDay.size();
         if (m > n / k) return -1;
+
         int low = *min_element(bloomDay.begin(), bloomDay.end());
         int high = *max_element(bloomDay.begin(), bloomDay.end());
-        
-        function<bool(int)> check = [&] (int limit) {
-            int flower = 0;
-            int bouquets = 0;
+
+        auto canMakeBouquets = [&] (int days) {
+            int bouquets = 0, flowers = 0;
             for (int i = 0; i < n; ++i) {
-                if (bloomDay[i] <= limit) {
-                    ++flower;
-                    if (flower == k) {
-                        flower = 0;
-                        bouquets++;
+                if (bloomDay[i] <= days) {
+                    ++flowers;
+                    if (flowers == k) {
+                        ++bouquets;
+                        flowers = 0; // Reset after making a bouquet
                     }
                 } else {
-                    flower = 0;
+                    flowers = 0; // Reset if the flower cannot be used
                 }
             }
             return bouquets >= m;
         };
-        
-        while (low <= high) {
-            int limit = low + (high - low) / 2;
-            if (check(limit)) {
-                high = limit - 1;
+
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (canMakeBouquets(mid)) {
+                high = mid; // Look for a smaller feasible value
             } else {
-                low = limit + 1;
+                low = mid + 1; // Increase the limit
             }
         }
-        
+
         return low;
     }
+
 };
