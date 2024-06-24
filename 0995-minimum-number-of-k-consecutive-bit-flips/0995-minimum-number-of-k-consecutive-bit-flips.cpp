@@ -7,13 +7,13 @@ public:
         int revCnt = 0;
         int res = 0;
         for (int i = 0; i < n; ++i) {
-            revCnt += diff[i];
-            if ((nums[i] + revCnt) % 2 == 0) {
+            revCnt ^= diff[i];
+            if (nums[i] == revCnt) {
                 if (i + k > n) return -1;
                 
                 ++res;
-                ++revCnt;
-                --diff[i + k];
+                revCnt ^= 1;
+                diff[i + k] ^= 1;
             }
         }
         return res;
