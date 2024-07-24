@@ -16,9 +16,10 @@ public:
         };
         
         // increasing
-        ranges::sort(nums, [&] (const int& a, const int& b) {
+        stable_sort(nums.begin(), nums.end(), [&] (const int& a, const int& b) {
             return _transform(a) < _transform(b);
         });
+
         
         return nums;
     }
