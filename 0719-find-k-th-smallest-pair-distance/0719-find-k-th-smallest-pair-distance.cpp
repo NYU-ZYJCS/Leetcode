@@ -13,9 +13,9 @@ public:
         };
         
         int l = 0, r = 1e6;
-        while (l < r) {
+        while (l <= r) {
             int mid = l + (r - l) / 2;
-            if (check(mid)) r = mid;
+            if (check(mid)) r = mid - 1;
             else l = mid + 1;
         }
 
