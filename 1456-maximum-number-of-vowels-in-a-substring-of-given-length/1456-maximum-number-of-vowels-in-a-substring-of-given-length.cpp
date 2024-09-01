@@ -6,11 +6,11 @@ public:
         unordered_set<char> vowels({'a', 'e', 'i', 'o', 'u'});
         
         for (int i = 0; i < size; ++i) {
-            if (vowels.find(s[i]) != vowels.end()) ++count;
+            if (vowels.contains(s[i])) ++count;
             
             if (i < k - 1) continue;
             ans = max(ans, count);
-            if (vowels.find(s[i - k + 1]) != vowels.end()) --count;
+            if (vowels.contains(s[i - k + 1])) --count;
         }
         
         return ans;
