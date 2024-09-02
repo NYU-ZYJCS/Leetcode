@@ -18,15 +18,16 @@ public:
         while (head) {
             int sum = 0;
             
-            if (head->val == 0) {
-                head = head->next;
-                continue;
-            }
+           if (head->val == 0) {
+               head = head->next;
+               continue;
+           }
             
             while (head && head->val != 0) {
                 sum += head->val;
                 head = head->next;
             }
+            
             
             cur->next = new ListNode(sum);
             cur = cur->next;
