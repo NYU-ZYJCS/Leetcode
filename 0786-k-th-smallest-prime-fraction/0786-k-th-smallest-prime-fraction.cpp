@@ -3,19 +3,26 @@ public:
 
     vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k) {
         int n = arr.size();
-        auto cmp = [&] (const pair<int, int>& x, const pair<int, int>& y) {
-            return arr[x.first] * arr[y.second] > arr[x.second] * arr[y.first];
-        };
+        double l = 0.0, r = 1.0;
         
-        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> q(cmp);
-        for (int j = 1; j < n; ++j) q.emplace(0, j);
-        
-        for (int _ = 1; _ < k; ++_) {
-            auto [i, j] = q.top();
-            q.pop();
-            if (i + 1 < j) q.emplace(i + 1, j);
+        while (true) {
+            double mid = (l + r) / 2;
+            int cnt = 0, i = 0, x = 0, y = 1;
+            
+            for (int j = 1; j < n; ++j) {
+                while ((double)arr[i] / arr[j] < mid) {
+                    if (arr[i] * y > arr[j] * x) {
+                        x = arr[i];
+                        y = arr[j];
+                    }
+                    ++i;
+                }
+                cnt += i;
+            }
+            if (cnt == k) return {x,y};
+            else if (cnt < k) l = mid;
+            else r = mid;
         }
-        
-        return {arr[q.top().first], arr[q.top().second]};
+        return {};
     }
 };
