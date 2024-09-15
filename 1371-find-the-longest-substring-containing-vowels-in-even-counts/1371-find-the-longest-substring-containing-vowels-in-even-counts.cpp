@@ -3,9 +3,9 @@ public:
     int findTheLongestSubstring(string s) {
         int n = s.size();
         vector<int> pos(32, INT_MAX);
-        pos[0] = -1; // Initialize pos[0] to -1
+        pos[0] = -1;
         int status = 0, res = 0;
-
+        
         for (int i = 0; i < s.size(); ++i) {
             char c = s[i];
             switch(c) {
@@ -16,13 +16,9 @@ public:
                 case 'u': status ^= 16; break;
                 default: break;
             }
-            if (pos[status] == INT_MAX) {
-                pos[status] = i;
-            } else {
-                res = max(res, i - pos[status]);
-            }
+            if (pos[status] == INT_MAX) pos[status] = i;
+            else res = max(res, i - pos[status]);
         }
         return res;
     }
-
 };
