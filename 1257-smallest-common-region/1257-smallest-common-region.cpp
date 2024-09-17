@@ -15,11 +15,10 @@ public:
             region1 = parent[region1];
         }
         
-        while (parent.contains(region2) && region1 != region2) {
-            if (seen.contains(region2)) return region2;
+        while (seen.contains(region2) == 0 && region1 != region2) {
             region2 = parent[region2];
         }
         
-        return region1;
+        return region2;
     }
 };
