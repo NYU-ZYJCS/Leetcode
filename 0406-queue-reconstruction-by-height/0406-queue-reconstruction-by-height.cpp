@@ -6,11 +6,10 @@ public:
             return a[0] > b[0] || (a[0] == b[0] && a[1] < b[1]);
         });
         
-        vector<vector<int>> result;
+        vector<vector<int>> res;
         for (auto p : people) {
-            result.insert(result.begin() + p[1], p);
+            res.insert(res.begin() + p[1], p);
         }
-        
-        return result;
+        return res;
     }
 };
