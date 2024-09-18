@@ -1,13 +1,15 @@
 class Solution {
 public:
     int minimumDeletions(string s) {
-        int a = 0, b = 0;
-        int n = s.size();
+        int countb = 0, counta = 0;
+        for (auto c : s) counta += (c == 'a');
         
+        int res = counta;
         for (auto c : s) {
-            if (c == 'a') a += 1;
-            else b = max(a, b) + 1;
+            countb += (c == 'b');
+            counta -= (c == 'a');
+            res = min(res, counta + countb);
         }
-        return n - max(a, b);
+        return res;
     }
 };
