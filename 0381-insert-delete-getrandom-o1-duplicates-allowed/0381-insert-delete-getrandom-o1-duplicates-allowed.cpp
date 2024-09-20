@@ -12,16 +12,15 @@ public:
     
     bool remove(int val) {
         if (mp.find(val) == mp.end()) return false;
-
+        
         int lastVal = nums.back();
-        int index = *mp[val].begin();
-        mp[val].erase(index);
-
-        nums[index] = lastVal;
-        mp[lastVal].insert(index);
+        int index_of_val = *mp[val].begin();
+        
+        nums[index_of_val] = lastVal;
+        mp[val].erase(index_of_val);
+        mp[lastVal].insert(index_of_val);
         mp[lastVal].erase(nums.size() - 1);
         nums.pop_back();
-
         
         if (mp[val].size() == 0) mp.erase(val);
         return true;
