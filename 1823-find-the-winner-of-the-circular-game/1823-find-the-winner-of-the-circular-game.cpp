@@ -4,7 +4,6 @@ public:
         return circle(n, k) + 1;
     }
  
-    
 private:
     int circle(int n, int k) {
         int res = 0;
