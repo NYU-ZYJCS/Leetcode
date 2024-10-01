@@ -7,6 +7,7 @@ public:
     bool win(string cur_s) {
         if (win_hash.contains(cur_s)) return win_hash[cur_s];
         
+        win_hash[cur_s] = false;
         int n = cur_s.size();
         for (int i = 0; i < n - 1; ++i) {
             if (cur_s[i] == '+' && cur_s[i + 1] == '+') {
@@ -16,12 +17,11 @@ public:
                 
                 if (result == false) {
                     win_hash[cur_s] = true;
-                    return true;
+                    break;
                 }
             } 
         }
         
-        win_hash[cur_s] = false;
         return win_hash[cur_s];
     }
 
