@@ -12,12 +12,12 @@ private:
         if (px == py) return;
 
         if (ranks[px] < ranks[py]) {
-            parent[py] = px; 
+            parent[px] = py; 
         } else if (ranks[px] > ranks[py]) {
-            parent[px] = py;
+            parent[py] = px;
         } else {
-            parent[px] = py;
-            ++ranks[py];
+            parent[py] = px;
+            ++ranks[px];
         }
     }
 
