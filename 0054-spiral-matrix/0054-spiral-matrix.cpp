@@ -9,14 +9,14 @@ public:
             for (int i = l; i <= r; ++i) res.push_back(matrix[u][i]);
             if (++u > d) break;
             
-            for(int i = u; i <= d; ++i) res.emplace_back(matrix[i][r]);
-            if(--r < l) break;
+            for (int i = u; i <= d; ++i) res.emplace_back(matrix[i][r]);
+            if (--r < l) break;
 
-            for(int i = r; i >= l; --i) res.emplace_back(matrix[d][i]);
-            if(--d < u) break;
+            for (int i = r; i >= l; --i) res.emplace_back(matrix[d][i]);
+            if (--d < u) break;
 
             for(int i = d; i >= u; --i) res.emplace_back(matrix[i][l]);
-            if(++l > r) break;
+            if (++l > r) break;
         }
         
         return res;
