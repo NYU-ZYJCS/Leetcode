@@ -13,8 +13,14 @@ public:
         
         //  ...
         // ..
+        auto it = lower_bound(intervals.begin(), intervals.end(), start, 
+                      [](const vector<int>& interval, int value) {
+                          return interval[1] < value;
+                      });
+        
+        int j = it - intervals.begin();
         int i = 0;
-        while (i < n && intervals[i][1] < start) res.push_back(intervals[i++]);
+        while (i < j) res.push_back(intervals[i++]);
         
         while (i < n && intervals[i][0] <= end) {
             start = min(start, intervals[i][0]);
