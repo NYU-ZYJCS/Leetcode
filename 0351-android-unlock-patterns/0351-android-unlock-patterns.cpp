@@ -8,7 +8,7 @@ public:
         skip[7][9] = skip[9][7] = 8;
         skip[1][9] = skip[9][1] = skip[2][8] = skip[8][2] = skip[3][7] = skip[7][3] = skip[4][6] = skip[6][4] = 5;
 
-        vector<bool> visited(10, false);
+       vector<bool> visited(10, false);
         int res = 0;
         for (int i = m; i <= n; ++i) {
             res += dfs(visited, skip, 1, i - 1) * 4;
@@ -19,8 +19,8 @@ public:
     }
 
     int dfs(vector<bool>& visited, vector<vector<int>>& skip, int cur, int remain) {
-        // if (remain < 0) return 0;
         if (remain == 0) return 1;
+        
         visited[cur] = true;
         int res = 0;
         for (int i = 1; i <= 9; ++i) {
@@ -29,6 +29,7 @@ public:
             }
         }
         visited[cur] = false;
+        
         return res;
     }
 };
