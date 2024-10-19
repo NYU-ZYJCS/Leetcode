@@ -9,7 +9,10 @@ public:
     unordered_map<string, list<Node>::iterator> kv;
     list<Node> List;
     
-    AllOne() {}
+    
+    AllOne() {
+        
+    }
     
     void inc(string key) {
         if (kv.contains(key)) {
