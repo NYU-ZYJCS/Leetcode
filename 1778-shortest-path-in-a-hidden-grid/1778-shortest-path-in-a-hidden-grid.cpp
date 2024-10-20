@@ -48,7 +48,7 @@ int findShortestPath(GridMaster &master) {
             }
         }
         ++cnt;
-        swap(q, q1);
+        q = q1;
     }
     return -1;
 }
