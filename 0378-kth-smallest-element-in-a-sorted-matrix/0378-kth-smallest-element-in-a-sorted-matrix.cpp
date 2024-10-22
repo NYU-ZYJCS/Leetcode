@@ -1,16 +1,15 @@
+struct point {
+    int val, x, y;
+    point(int val, int x, int y) : val(val), x(x), y(y) {}
+    
+    bool operator<(const point& o) const {
+        return val < o.val;
+    }
+};
+
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {
-        // 1   5  9 
-        // 10 11 13
-        // 12 13 15
-        
-        // custom type
-        struct point {
-            int val, x, y;
-            point(int val, int x, int y) : val(val), x(x), y(y) {}
-        };
-
         // custom compare
         auto cmp = [](point a, point b) {
             return a.val > b.val;
