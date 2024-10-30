@@ -2,7 +2,7 @@ class Solution {
 public:
     int strStr(string haystack, string needle) {
         int m = haystack.size(), n = needle.size();
-        vector<int> next(n + 1, 0);
+        vector<int> next(n + 1);
         
         for (int i = 1, j = 0; i < n; ++i) {
             while (j > 0 && needle[i] != needle[j]) j = next[j - 1];
@@ -16,6 +16,7 @@ public:
             
             if (j == n) return i - n + 1;
         }
+        
         
         return -1;
     }
