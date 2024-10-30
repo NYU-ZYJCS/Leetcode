@@ -9,6 +9,7 @@ public:
 
         vector<int> res(n);
         vector<int> size(n, 1);
+        
         function<void(int, int, int)> dfs = [&] (int cur, int parent, int depth) {
             res[0] += depth;
             for (int neighbor : graph[cur]) {
@@ -19,9 +20,9 @@ public:
             }
         };
         dfs(0, -1, 0);
-
+        
         function<void(int, int)> reroot = [&] (int cur, int parent) {
-            for (int neighbor : graph[cur]) {
+            for (auto neighbor : graph[cur]) {
                 if (neighbor != parent) {
                     res[neighbor] = res[cur] + n - 2 * size[neighbor];
                     reroot(neighbor, cur);
