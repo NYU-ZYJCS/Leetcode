@@ -1,37 +1,30 @@
 class Solution {
 public:
     int smallestChair(vector<vector<int>>& times, int targetFriend) {
-        // [1, 5], [2, 6], [3, 10]
+        using ii = pair<int, int>;
+        int target_in = times[targetFriend][0];
+        ranges::sort(times);
         
-        int n = times.size();
-        vector<pair<int, int>> arrival;
-        vector<pair<int, int>> leaving; 
-        for (int i = 0; i < n; ++i) {
-            arrival.emplace_back(times[i][0], i);
-            leaving.emplace_back(times[i][1], i);
-        }
+        priority_queue<ii, vector<ii>, greater<ii>> leave;
+        priority_queue<int, vector<int>, greater<int>> chair;
         
-        sort(arrival.begin(), arrival.end());
-        sort(leaving.begin(), leaving.end());
+        for (int i = 0; i < times.size(); ++i) chair.push(i);
 
-        priority_queue<int, vector<int>, greater<int>> available;
-        for (int i = 0; i < n; ++i) {
-            available.push(i);
-        }
-        unordered_map<int, int> seats;
-        
-        int j = 0;
-        for (auto& [time, person] : arrival) {
-            while (j < n && leaving[j].first <= time) {
-                available.push(seats[leaving[j].second]);
-                ++j;
+        for (auto& t : times) {
+            while (!leave.empty() && t[0] >= leave.top().first) {
+                chair.push(leave.top().second);
+                leave.pop();
             }
             
-            seats[person] = available.top();
-            available.pop();
-            if (person == targetFriend) return seats[person];
+            leave.push({t[1], chair.top()});
+            
+            if (target_in == t[0]) {
+                return chair.top();
+            }
+            
+            chair.pop();
         }
         
-        return -1;
+        return 0; 
     }
 };
