@@ -14,29 +14,33 @@ public:
     TreeNode* replaceValueInTree(TreeNode* root) {
         root->val = 0;
         vector<TreeNode*> q = {root};
+        
         while (!q.empty()) {
-            vector<TreeNode*> nxt;
+            vector<TreeNode*> next_level;
             int next_level_sum = 0;
+            
             for (auto node : q) {
                 if (node->left) {
-                    nxt.push_back(node->left);
+                    next_level.push_back(node->left);
                     next_level_sum += node->left->val;
                 }
                 if (node->right) {
-                    nxt.push_back(node->right);
+                    next_level.push_back(node->right);
                     next_level_sum += node->right->val;
                 }
             }
-
+            
             for (auto node : q) {
                 int children_sum = (node->left ? node->left->val : 0) +
                                    (node->right ? node->right->val : 0);
+                
                 if (node->left) node->left->val = next_level_sum - children_sum;
                 if (node->right) node->right->val = next_level_sum - children_sum;
             }
-            q = move(nxt);
+            
+            q = next_level;
         }
-
+        
         return root;
     }
 };
