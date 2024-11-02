@@ -16,20 +16,30 @@ public:
         map(master, x, y, 'U');
 
 
-        vector<pair<int, int>> q{{x, y}};
+        queue<pair<int, int>> q;
+        q.push({x, y});
+        
         while (!q.empty()) {
-            vector<pair<int, int>> q1;
-            for (auto [x, y] : q) {
-                if (g[x][y] == 2)
-                    return cnt;
-                if (g[x][y] == 1) {
-                    g[x][y] = -1;
-                    for (auto [_, dd] : dirs)
-                        q1.push_back({x + dd[0], y + dd[1]});
+            int size = q.size();
+            
+            while (size--) {
+                auto [cx, cy] = q.front();
+                q.pop();
+                
+                
+                for (auto& [d, dxy] : dirs) {
+                    int nx = cx + dxy[0], ny = cy + dxy[1];
+                    
+                    if (g[nx][ny] == 2) return cnt + 1;
+                    
+                    if (g[nx][ny] == 1) {
+                        q.push({nx, ny});
+                        g[nx][ny] = -1;
+                    }
                 }
             }
+            
             ++cnt;
-            q = q1;
         }
         
         
