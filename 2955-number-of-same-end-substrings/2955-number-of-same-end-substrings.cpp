@@ -4,13 +4,13 @@ public:
         int n = s.length();
         vector<vector<int>> prefix(26, vector<int>(n + 1, 0));
 
-        // Fill the frequency array
-        for (int i = 0; i < n; i++) prefix[s[i] - 'a'][i + 1]++;
-
-        // Convert the frequency array into a prefix sum array
-        for (int i = 0; i < 26; i++) {
-            for (int j = 0; j < n; j++) {
-                prefix[i][j + 1] += prefix[i][j];
+        for (int i = 0; i < n; i++) {
+            int c = s[i] - 'a';
+            prefix[c][i + 1] = prefix[c][i] + 1;
+            for (int j = 0; j < 26; j++) {
+                if (j != c) {
+                    prefix[j][i + 1] = prefix[j][i];
+                }
             }
         }
 
