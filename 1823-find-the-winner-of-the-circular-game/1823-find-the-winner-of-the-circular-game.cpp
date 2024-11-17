@@ -1,15 +1,11 @@
 class Solution {
 public:
     int findTheWinner(int n, int k) {
-        return circle(n, k) + 1;
+        return winnerHelper(n, k) + 1;
     }
- 
-private:
-    int circle(int n, int k) {
-        int res = 0;
-        for (int i = 1; i <= n; ++i) {
-            res = (res + k) % i;
-        }
-        return res;
+    
+    int winnerHelper(int n, int k) {
+        if (n == 1) return 0;
+        return (winnerHelper(n - 1, k) + k) % n;
     }
 };
