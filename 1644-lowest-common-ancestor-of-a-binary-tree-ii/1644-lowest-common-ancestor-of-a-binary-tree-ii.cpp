@@ -25,7 +25,6 @@ public:
             p_exist = true;
             return root;
         }
-        
         if (root == q) {
             q_exist = true;
             return root;
