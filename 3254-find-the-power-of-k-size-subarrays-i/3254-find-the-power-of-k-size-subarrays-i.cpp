@@ -1,27 +1,21 @@
 class Solution {
 public:
     vector<int> resultsArray(vector<int>& nums, int k) {
-        if (k == 1) {
-            return nums;  
-        }
-
-        size_t length = nums.size();
-        vector<int> result(length - k + 1, -1);  // Initialize results with -1
-        int consecutiveCount = 1;  // Count of consecutive elements
-
-        for (size_t index = 0; index < length - 1; index++) {
-            if (nums[index] + 1 == nums[index + 1]) {
-                consecutiveCount++;
+        int pre_increasing = 1;
+        
+        vector<int> res;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (i == 0 || nums[i] != nums[i - 1] + 1) {
+                pre_increasing = 1;
             } else {
-                consecutiveCount = 1;  // Reset count if not consecutive
+                pre_increasing++;
             }
-
-            // If we have enough consecutive elements, update the result
-            if (consecutiveCount >= k) {
-                result[index - k + 2] = nums[index + 1];
+            
+            if (i >= k - 1) {
+                res.push_back(pre_increasing >= k ? nums[i] : -1);
             }
         }
-
-        return result;
+        
+        return res;
     }
 };
