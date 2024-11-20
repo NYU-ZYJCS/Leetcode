@@ -2,28 +2,24 @@ class Solution {
 public:
     long long countFairPairs(vector<int>& nums, int lower, int upper) {
         int n = nums.size();
-        int left = 0, right = n - 1;
         ranges::sort(nums);
-        
-        long long small = count(nums, lower - 1);
-        long long big = count(nums, upper);
-        return big - small;
+        return countPairs(nums, upper) - countPairs(nums, lower - 1);
     }
     
-    long long count(vector<int>& nums, int upper) {
-        int n = nums.size();
-        int left = 0, right = n - 1;
+    long long countPairs(vector<int>& nums, int target) {
+        int l = 0, r = nums.size() - 1;
         long long res = 0;
         
-        while (left < right) {
-            long long sum = nums[left] + nums[right];
-            if (sum <= upper) {
-                res += right - left;
-                left++;
+        while (l < r) {
+            long long sum = nums[l] + nums[r];
+            if (sum > target) {
+                --r;
             } else {
-                right--;
+                res += r - l;
+                ++l;
             }
         }
+        
         return res;
     }
 };
