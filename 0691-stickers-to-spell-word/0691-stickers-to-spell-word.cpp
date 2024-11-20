@@ -23,6 +23,7 @@ public:
                         }
                     }
                 }
+                
                 dp[cur] = min(dp[cur], dp[i] + 1);
             }
         }
